@@ -1,6 +1,7 @@
 package com.miniforge.app.data.local.prefs
 
 import android.content.Context
+import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -20,11 +21,11 @@ class SecurePrefs @Inject constructor(
     )
 
     fun putApiKey(providerId: String, key: String) =
-        prefs.edit().putString("apikey_$providerId", key).apply()
+        prefs.edit { putString("apikey_$providerId", key) }
 
     fun getApiKey(providerId: String): String? =
         prefs.getString("apikey_$providerId", null)
 
     fun removeApiKey(providerId: String) =
-        prefs.edit().remove("apikey_$providerId").apply()
+        prefs.edit { remove("apikey_$providerId") }
 }
