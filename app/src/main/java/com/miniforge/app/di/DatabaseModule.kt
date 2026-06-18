@@ -3,6 +3,9 @@ package com.miniforge.app.di
 import android.content.Context
 import androidx.room.Room
 import com.miniforge.app.data.local.db.MiniForgeDatabase
+import com.miniforge.app.data.local.db.dao.AiProviderDao
+import com.miniforge.app.data.local.db.dao.ChatMessageDao
+import com.miniforge.app.data.local.db.dao.MiniAppDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +27,8 @@ object DatabaseModule {
             MiniForgeDatabase::class.java,
             "miniforge.db"
         ).build()
+
+    @Provides fun provideMiniAppDao(db: MiniForgeDatabase): MiniAppDao = db.miniAppDao()
+    @Provides fun provideChatMessageDao(db: MiniForgeDatabase): ChatMessageDao = db.chatMessageDao()
+    @Provides fun provideAiProviderDao(db: MiniForgeDatabase): AiProviderDao = db.aiProviderDao()
 }

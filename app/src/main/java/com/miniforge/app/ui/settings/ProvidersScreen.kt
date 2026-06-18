@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.miniforge.app.data.model.AiProvider
 import com.miniforge.app.data.model.ApiFormat
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProvidersScreen(vm: ProvidersViewModel = hiltViewModel()) {
     val providers by vm.providers.collectAsState()
