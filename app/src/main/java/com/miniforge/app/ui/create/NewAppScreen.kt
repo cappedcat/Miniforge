@@ -11,7 +11,7 @@ import java.util.UUID
 
 @Composable
 fun NewAppScreen(
-    onGenerate: (appId: String, prompt: String) -> Unit,
+    onGenerate: (name: String, description: String, prompt: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var name by remember { mutableStateOf("") }
@@ -70,9 +70,7 @@ fun NewAppScreen(
         // Generate button
         Button(
             onClick = {
-                val appId = UUID.randomUUID().toString()
-                val formattedPrompt = buildPrompt(name, description, prompt)
-                onGenerate(appId, formattedPrompt)
+                onGenerate(name.trim(), description.trim(), prompt.trim())
             },
             modifier = Modifier
                 .fillMaxWidth()
