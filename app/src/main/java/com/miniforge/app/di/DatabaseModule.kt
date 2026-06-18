@@ -22,6 +22,6 @@ object DatabaseModule {
         Room.databaseBuilder(
             context,
             MiniForgeDatabase::class.java,
-            "miniforge_database"
+            "miniforge.db"
         ).build()
 }
