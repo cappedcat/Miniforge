@@ -138,7 +138,8 @@ chat_history
   id              TEXT PRIMARY KEY
   app_id          TEXT
   role            TEXT       -- "user" | "assistant" | "system"
-  content         TEXT
+  content         TEXT       -- for assistant messages: stores user-facing summary only,
+                             --   NOT the full HTML (HTML is always read from html_file_path)
   created_at      INTEGER
 
 ai_providers
