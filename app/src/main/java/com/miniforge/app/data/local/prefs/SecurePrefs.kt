@@ -3,42 +3,28 @@ package com.miniforge.app.data.local.prefs
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-/**
- * Secure storage for sensitive data like API keys using encrypted SharedPreferences.
- * Encryption/decryption is automatic — values are encrypted at rest.
- */
-class SecurePrefs(context: Context) {
-
-    private val masterKey = MasterKey.Builder(context)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build()
-
-    private val encryptedSharedPrefs = EncryptedSharedPreferences.create(
+@Singleton
+class SecurePrefs @Inject constructor(
+    @ApplicationContext context: Context
+) {
+    private val prefs = EncryptedSharedPreferences.create(
         context,
-        PREFS_NAME,
-        masterKey,
+        "miniforge_secure",
+        MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build(),
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
-    fun saveApiKey(key: String, value: String) {
-        encryptedSharedPrefs.edit().putString(key, value).apply()
-    }
+    fun putApiKey(providerId: String, key: String) =
+        prefs.edit().putString("apikey_$providerId", key).apply()
 
-    fun getApiKey(key: String): String? {
-        return encryptedSharedPrefs.getString(key, null)
-    }
+    fun getApiKey(providerId: String): String? =
+        prefs.getString("apikey_$providerId", null)
 
-    fun deleteApiKey(key: String) {
-        encryptedSharedPrefs.edit().remove(key).apply()
-    }
-
-    fun clearAllKeys() {
-        encryptedSharedPrefs.edit().clear().apply()
-    }
-
-    companion object {
-        private const val PREFS_NAME = "secure_prefs"
-    }
+    fun removeApiKey(providerId: String) =
+        prefs.edit().remove("apikey_$providerId").apply()
 }

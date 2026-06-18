@@ -1,7 +1,12 @@
 package com.miniforge.app.data.model
 
-enum class AiProvider {
-    CLAUDE,
-    GEMINI,
-    GPT
-}
+data class AiProvider(
+    val id: String,
+    val name: String,
+    val baseUrl: String,
+    val apiFormat: ApiFormat,
+    val model: String,
+    val isDefault: Boolean
+)
+
+enum class ApiFormat { OPENAI, ANTHROPIC }

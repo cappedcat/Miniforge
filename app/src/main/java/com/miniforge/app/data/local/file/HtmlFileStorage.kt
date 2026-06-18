@@ -1,38 +1,24 @@
 package com.miniforge.app.data.local.file
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
+import javax.inject.Inject
+import javax.inject.Singleton
 
-/**
- * Stores and retrieves HTML content as files in app-specific cache directory.
- * Files are automatically cleared when app cache is cleared.
- */
-class HtmlFileStorage(private val context: Context) {
+@Singleton
+class HtmlFileStorage @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
+    private val dir: File get() = File(context.filesDir, "miniapps").also { it.mkdirs() }
 
-    fun saveHtml(filename: String, content: String) {
-        val file = File(context.cacheDir, filename)
-        file.writeText(content, Charsets.UTF_8)
+    fun save(id: String, html: String): String {
+        val file = File(dir, "$id.html")
+        file.writeText(html, Charsets.UTF_8)
+        return file.absolutePath
     }
 
-    fun getHtml(filename: String): String? {
-        val file = File(context.cacheDir, filename)
-        return if (file.exists()) {
-            File(context.cacheDir, filename).readText(Charsets.UTF_8)
-        } else {
-            null
-        }
-    }
+    fun read(path: String): String? = runCatching { File(path).readText(Charsets.UTF_8) }.getOrNull()
 
-    fun deleteHtml(filename: String): Boolean {
-        val file = File(context.cacheDir, filename)
-        return if (file.exists()) {
-            file.delete()
-        } else {
-            false
-        }
-    }
-
-    fun clearAllHtml() {
-        context.cacheDir.listFiles()?.forEach { it.delete() }
-    }
+    fun delete(path: String) { File(path).delete() }
 }

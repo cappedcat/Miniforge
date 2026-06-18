@@ -4,6 +4,8 @@ data class MiniApp(
     val id: String,
     val name: String,
     val description: String,
-    val systemPrompt: String,
-    val aiProvider: AiProvider
+    val htmlFilePath: String,
+    val createdAt: Long,
+    val updatedAt: Long,
+    val marketplaceId: String? = null
 )
