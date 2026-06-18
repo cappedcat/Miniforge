@@ -1,0 +1,17 @@
+﻿# Gradle build artifacts
+.gradle/
+build/
+app/build/
+
+# Local configuration (machine-specific SDK path)
+local.properties
+
+# Android Studio / IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Keystore files (security)
+*.jks
+*.keystore
