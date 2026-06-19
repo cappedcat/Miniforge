@@ -30,13 +30,14 @@ class ProvidersViewModel @Inject constructor(
 
     fun save(form: ProviderFormState) {
         viewModelScope.launch {
+            val isFirst = providers.value.isEmpty()
             val provider = AiProvider(
                 id = UUID.randomUUID().toString(),
                 name = form.name,
                 baseUrl = form.baseUrl.trimEnd('/'),
                 apiFormat = form.apiFormat,
                 model = form.model,
-                isDefault = form.isDefault
+                isDefault = isFirst  // auto-default if first provider
             )
             repo.save(provider, form.apiKey)
         }
