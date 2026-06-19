@@ -1,6 +1,8 @@
 package com.miniforge.app.ui.navigation
 
 import android.net.Uri
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Apps
@@ -57,18 +59,22 @@ fun AppNavigation() {
             startDestination = Routes.MY_APPS,
         ) {
             composable(Routes.MY_APPS) {
-                MyAppsScreen(
-                    onOpenApp = { app -> navController.navigate(Routes.runner(app.id)) }
-                )
+                // Apply padding so content isn't hidden behind bottom nav
+                Box(Modifier.padding(innerPadding)) {
+                    MyAppsScreen(onOpenApp = { app -> navController.navigate(Routes.runner(app.id)) })
+                }
             }
             composable(Routes.CREATE) {
-                NewAppScreen(
-                    onGenerate = { name, description, prompt ->
-                        navController.navigate(Routes.generator(name, description, prompt))
-                    }
-                )
+                Box(Modifier.padding(innerPadding)) {
+                    NewAppScreen(
+                        onGenerate = { name, description, prompt ->
+                            navController.navigate(Routes.generator(name, description, prompt))
+                        }
+                    )
+                }
             }
             composable(Routes.SETTINGS) {
+                // SettingsScreen has its own Scaffold — it re-handles insets internally
                 SettingsScreen()
             }
             composable(
