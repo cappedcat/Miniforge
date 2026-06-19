@@ -28,12 +28,14 @@ import com.miniforge.app.ui.create.GeneratorScreen
 import com.miniforge.app.ui.create.NewAppScreen
 import com.miniforge.app.ui.myapps.MyAppsScreen
 import com.miniforge.app.ui.runner.AppRunnerScreen
+import com.miniforge.app.ui.settings.ProvidersScreen
 import com.miniforge.app.ui.settings.SettingsScreen
 
 private object Routes {
     const val MY_APPS = "my_apps"
     const val CREATE = "create"
     const val SETTINGS = "settings"
+    const val PROVIDERS = "providers"
     const val RUNNER = "runner/{appId}"
 
     fun runner(appId: String) = "runner/$appId"
@@ -59,7 +61,6 @@ fun AppNavigation() {
             startDestination = Routes.MY_APPS,
         ) {
             composable(Routes.MY_APPS) {
-                // Apply padding so content isn't hidden behind bottom nav
                 Box(Modifier.padding(innerPadding)) {
                     MyAppsScreen(onOpenApp = { app -> navController.navigate(Routes.runner(app.id)) })
                 }
@@ -74,8 +75,13 @@ fun AppNavigation() {
                 }
             }
             composable(Routes.SETTINGS) {
-                // SettingsScreen has its own Scaffold — it re-handles insets internally
-                SettingsScreen()
+                Box(Modifier.padding(innerPadding)) {
+                    SettingsScreen(onNavigateToProviders = { navController.navigate(Routes.PROVIDERS) })
+                }
+            }
+            // Providers is a full-screen destination (no bottom bar, has its own Scaffold+TopAppBar)
+            composable(Routes.PROVIDERS) {
+                ProvidersScreen()
             }
             composable(
                 route = "generator?name={name}&description={description}&prompt={prompt}",
