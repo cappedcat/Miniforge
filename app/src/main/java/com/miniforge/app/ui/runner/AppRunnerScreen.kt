@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,10 +18,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -37,8 +43,17 @@ fun AppRunnerScreen(
     vm: AppRunnerViewModel = hiltViewModel()
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(state.exportMessage) {
+        state.exportMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            vm.clearExportMessage()
+        }
+    }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = { Text(state.appName) },
@@ -51,6 +66,14 @@ fun AppRunnerScreen(
                     }
                 },
                 actions = {
+                    if (state.html != null) {
+                        IconButton(onClick = { vm.exportHtml() }) {
+                            Icon(
+                                imageVector = Icons.Filled.Share,
+                                contentDescription = "Export HTML"
+                            )
+                        }
+                    }
                     IconButton(onClick = { vm.reload() }) {
                         Icon(
                             imageVector = Icons.Filled.Refresh,

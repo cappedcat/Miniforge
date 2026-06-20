@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Rounded purple background -->
+    <path
+        android:fillColor="#7c3aed"
+        android:pathData="M20,0h68a20,20 0 0,1 20,20v68a20,20 0 0,1 -20,20h-68a20,20 0 0,1 -20,-20v-68a20,20 0 0,1 20,-20z" />
+
+    <!-- White plus vertical bar -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M48,28h12v52h-12z" />
+
+    <!-- White plus horizontal bar -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M28,48h52v12h-52z" />
+
+    <!-- Gold dot accent -->
+    <path
+        android:fillColor="#fbbf24"
+        android:pathData="M82,25m-4,0a4,4 0 1,1 8,0a4,4 0 1,1 -8,0" />
+</vector>

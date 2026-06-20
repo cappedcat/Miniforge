@@ -5,7 +5,6 @@ import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,13 +27,13 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,24 +44,25 @@ fun GeneratorScreen(
     appName: String,
     appDescription: String,
     initialPrompt: String,
+    providerId: String?,
+    modelId: String? = null,
     onSaved: () -> Unit,
     viewModel: GeneratorViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showRefineModal by remember { mutableStateOf(false) }
 
-    // Kick off generation on first composition if idle and we have a prompt
-    val hasStarted = remember { mutableStateOf(false) }
-    if (!hasStarted.value && initialPrompt.isNotBlank()) {
-        hasStarted.value = true
-        viewModel.generate(initialPrompt, appName, appDescription)
+    LaunchedEffect(Unit) {
+        if (initialPrompt.isNotBlank()) {
+            viewModel.generate(initialPrompt, appName, appDescription, providerId, modelId)
+        }
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
         when (val state = uiState) {
             is GeneratorUiState.Idle -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("Ready to generate", style = MaterialTheme.typography.bodyMedium)
+                    CircularProgressIndicator()
                 }
             }
 
@@ -71,10 +71,6 @@ fun GeneratorScreen(
             }
 
             is GeneratorUiState.Ready -> {
-                if (state.sizeKb >= 300) {
-                    SizeWarningBanner(sizeKb = state.sizeKb)
-                }
-
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -95,12 +91,12 @@ fun GeneratorScreen(
             is GeneratorUiState.Error -> {
                 ErrorView(
                     message = state.message,
-                    onRetry = { viewModel.generate(initialPrompt, appName, appDescription) }
+                    onRetry = { viewModel.generate(initialPrompt, appName, appDescription, providerId, modelId) }
                 )
             }
 
             is GeneratorUiState.Saved -> {
-                onSaved()
+                LaunchedEffect(Unit) { onSaved() }
             }
         }
     }
@@ -153,31 +149,16 @@ fun HtmlWebView(html: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun SizeWarningBanner(sizeKb: Int) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.errorContainer)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = Icons.Default.Warning,
-            contentDescription = "Warning",
-            tint = MaterialTheme.colorScheme.onErrorContainer,
-            modifier = Modifier.size(18.dp)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(
-            text = "App is large (${sizeKb} KB). Performance may be affected.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onErrorContainer
-        )
-    }
-}
+internal fun StreamingView(accumulated: String) {
+    var cursorVisible by remember { mutableStateOf(true) }
 
-@Composable
-private fun StreamingView(accumulated: String) {
+    LaunchedEffect(Unit) {
+        while (true) {
+            kotlinx.coroutines.delay(500)
+            cursorVisible = !cursorVisible
+        }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -186,7 +167,7 @@ private fun StreamingView(accumulated: String) {
             contentAlignment = Alignment.Center
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
                 Spacer(modifier = Modifier.width(12.dp))
                 Text("Generating…", style = MaterialTheme.typography.bodyMedium)
             }
@@ -200,8 +181,9 @@ private fun StreamingView(accumulated: String) {
             color = MaterialTheme.colorScheme.surfaceVariant,
             shape = MaterialTheme.shapes.medium
         ) {
+            val displayText = accumulated + (if (cursorVisible && accumulated.isNotEmpty()) "▌" else "")
             Text(
-                text = accumulated,
+                text = displayText,
                 modifier = Modifier
                     .padding(12.dp)
                     .verticalScroll(rememberScrollState()),

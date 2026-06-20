@@ -66,6 +66,9 @@ dependencies {
     implementation(libs.coroutines.android)
     implementation(libs.serialization.json)
     implementation(libs.security.crypto)
+    implementation(libs.nanohttpd)
+    implementation(libs.zxing.core)
+    implementation(libs.zxing.android)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockk)

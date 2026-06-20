@@ -28,10 +28,8 @@ class MiniAppRepository @Inject constructor(
         return app.copy(htmlFilePath = path)
     }
 
-    suspend fun updateHtml(id: String, html: String) {
-        val existing = miniAppDao.getById(id) ?: return
-        htmlFileStorage.save(id, html)
-        miniAppDao.updateHtml(id, existing.htmlFilePath, System.currentTimeMillis())
+    suspend fun updateHtml(id: String, htmlPath: String) {
+        miniAppDao.updateHtml(id, htmlPath, System.currentTimeMillis())
     }
 
     suspend fun delete(app: MiniApp) {

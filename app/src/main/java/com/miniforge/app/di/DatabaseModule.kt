@@ -6,6 +6,7 @@ import com.miniforge.app.data.local.db.MiniForgeDatabase
 import com.miniforge.app.data.local.db.dao.AiProviderDao
 import com.miniforge.app.data.local.db.dao.ChatMessageDao
 import com.miniforge.app.data.local.db.dao.MiniAppDao
+import com.miniforge.app.data.local.db.dao.ModelCacheDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,9 +27,10 @@ object DatabaseModule {
             context,
             MiniForgeDatabase::class.java,
             "miniforge.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
 
     @Provides fun provideMiniAppDao(db: MiniForgeDatabase): MiniAppDao = db.miniAppDao()
     @Provides fun provideChatMessageDao(db: MiniForgeDatabase): ChatMessageDao = db.chatMessageDao()
     @Provides fun provideAiProviderDao(db: MiniForgeDatabase): AiProviderDao = db.aiProviderDao()
+    @Provides fun provideModelCacheDao(db: MiniForgeDatabase): ModelCacheDao = db.modelCacheDao()
 }

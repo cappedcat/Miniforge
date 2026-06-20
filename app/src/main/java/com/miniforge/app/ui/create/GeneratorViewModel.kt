@@ -18,7 +18,7 @@ import javax.inject.Inject
 sealed class GeneratorUiState {
     object Idle : GeneratorUiState()
     data class Streaming(val accumulated: String) : GeneratorUiState()
-    data class Ready(val html: String, val sizeKb: Int = 0) : GeneratorUiState()
+    data class Ready(val html: String) : GeneratorUiState()
     data class Error(val message: String) : GeneratorUiState()
     object Saved : GeneratorUiState()
 }
@@ -43,26 +43,31 @@ class GeneratorViewModel @Inject constructor(
     // The most recent complete HTML produced (used when saving)
     private var latestHtml: String = ""
 
-    fun generate(prompt: String, appName: String, appDescription: String) {
-        _uiState.value = GeneratorUiState.Idle
+    fun generate(prompt: String, appName: String, appDescription: String, providerId: String? = null, modelId: String? = null) {
+        if (_uiState.value is GeneratorUiState.Streaming) return
         chatHistory.clear()
         currentApp = null
         latestHtml = ""
+        _uiState.value = GeneratorUiState.Streaming("")
+
+        val fullPrompt = buildString {
+            if (appName.isNotBlank()) append("App name: $appName\n")
+            if (appDescription.isNotBlank()) append("Description: $appDescription\n")
+            if (appName.isNotBlank() || appDescription.isNotBlank()) append("\n")
+            append(prompt)
+        }
 
         viewModelScope.launch {
-            aiService.generate(prompt).collect { state ->
+            aiService.generate(fullPrompt, providerId = providerId, modelId = modelId).collect { state ->
                 when (state) {
                     is GenerationState.Streaming -> {
                         _uiState.value = GeneratorUiState.Streaming(state.accumulated)
                     }
                     is GenerationState.Complete -> {
                         latestHtml = state.html
-                        // Record the exchange in history so refine has context
                         chatHistory.add(AiMessage("user", prompt))
-                        chatHistory.add(AiMessage("assistant", "[HTML app generated: ${state.sizeKb} KB]"))
-                        _uiState.value = GeneratorUiState.Ready(state.html, state.sizeKb)
-
-                        // Auto-save on first generation
+                        chatHistory.add(AiMessage("assistant", "[HTML app generated]"))
+                        _uiState.value = GeneratorUiState.Ready(state.html)
                         saveApp(appName, appDescription, state.html)
                     }
                     is GenerationState.Error -> {
@@ -92,8 +97,8 @@ class GeneratorViewModel @Inject constructor(
                     is GenerationState.Complete -> {
                         latestHtml = state.html
                         chatHistory.add(AiMessage("user", refinementPrompt))
-                        chatHistory.add(AiMessage("assistant", "[HTML app updated: ${state.sizeKb} KB]"))
-                        _uiState.value = GeneratorUiState.Ready(state.html, state.sizeKb)
+                        chatHistory.add(AiMessage("assistant", "[HTML app updated]"))
+                        _uiState.value = GeneratorUiState.Ready(state.html)
 
                         // Update existing saved app
                         currentApp?.let { app ->

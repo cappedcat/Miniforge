@@ -7,7 +7,29 @@
       "Bash(git init *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git config *)"
+      "Bash(git config *)",
+      "mcp__headroom__headroom_retrieve",
+      "Bash(rtk git *)",
+      "Bash(git -C \"C:/claude code mini app maker for android\" rev-parse --git-path sdd)",
+      "Bash(cat \"$\\(git -C \"C:/claude code mini app maker for android\" rev-parse --git-path sdd\\)/progress.md\")",
+      "Bash(git -C \"C:/claude code mini app maker for android\" log --oneline -5)",
+      "Bash(git -C \"C:/claude code mini app maker for android\" branch)",
+      "Bash(git *)",
+      "Bash(bash C:/Users/shefbi/.claude/plugins/cache/claude-plugins-official/superpowers/6.0.2/skills/subagent-driven-development/scripts/task-brief 'C:/claude code mini app maker for android/docs/superpowers/plans/2026-06-18-miniforge-foundation.md' 1)",
+      "PowerShell(gradle *)",
+      "Bash(/c/Users/shefbi/AppData/Local/Android/Sdk/platform-tools/adb.exe -s emulator-5556 shell screencap -p /sdcard/screen.png)",
+      "Bash(/c/Users/shefbi/AppData/Local/Android/Sdk/platform-tools/adb.exe -s emulator-5556 pull /sdcard/screen.png '/c/claude code mini app maker for android/test_mistral_error.png')",
+      "Bash(/c/Users/shefbi/AppData/Local/Android/Sdk/platform-tools/adb.exe -s emulator-5556 pull /sdcard/screen.png /tmp/test_mistral_gen.png)",
+      "Bash(/c/Users/shefbi/AppData/Local/Android/Sdk/platform-tools/adb.exe -s emulator-5556 shell logcat -d)",
+      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object { $_ -match \"^e:\" } | Select-Object -First 10)",
+      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object { $_ -match \"^e:\" } -First 5)",
+      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object { $_ -match \"^e:\" } | Select-Object -First 5)",
+      "Bash(bash -c '.\\\\gradlew assembleDebug 2>&1 | grep -E \"error:|FAILURE\" | head -20')",
+      "Bash(gradle assembleDebug)",
+      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD|Compilation error\"})",
+      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD\"})",
+      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD\"}; echo \"Build exit code: $?\")",
+      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD\"}; echo \"Build exit: $?\")"
     ]
   }
 }

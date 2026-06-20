@@ -20,6 +20,8 @@ class AiProviderRepository @Inject constructor(
 
     suspend fun getDefault(): AiProvider? = dao.getDefault()?.toDomain()
 
+    suspend fun getById(id: String): AiProvider? = dao.getById(id)?.toDomain()
+
     suspend fun save(provider: AiProvider, apiKey: String) {
         if (provider.isDefault) {
             dao.clearDefault()

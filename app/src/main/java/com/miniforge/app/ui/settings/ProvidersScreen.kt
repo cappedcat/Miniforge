@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarBorder
@@ -85,6 +86,7 @@ fun ProvidersScreen(vm: ProvidersViewModel = hiltViewModel()) {
     val providers by vm.providers.collectAsState()
     var showAddSheet by remember { mutableStateOf(false) }
     var confirmDeleteProvider by remember { mutableStateOf<AiProvider?>(null) }
+    var showGuideFor by remember { mutableStateOf<String?>(null) }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("AI Providers") }) },
@@ -106,7 +108,8 @@ fun ProvidersScreen(vm: ProvidersViewModel = hiltViewModel()) {
                     ProviderCard(
                         provider = provider,
                         onSetDefault = { vm.setDefault(provider) },
-                        onDeleteRequest = { confirmDeleteProvider = provider }
+                        onDeleteRequest = { confirmDeleteProvider = provider },
+                        onShowGuide = { showGuideFor = provider.name }
                     )
                 }
             }
@@ -124,6 +127,13 @@ fun ProvidersScreen(vm: ProvidersViewModel = hiltViewModel()) {
             dismissButton = {
                 TextButton(onClick = { confirmDeleteProvider = null }) { Text("Cancel") }
             }
+        )
+    }
+
+    showGuideFor?.let { providerName ->
+        ProviderGuideDialog(
+            providerName = providerName,
+            onDismiss = { showGuideFor = null }
         )
     }
 
@@ -169,7 +179,8 @@ private fun EmptyProvidersState(modifier: Modifier = Modifier) {
 private fun ProviderCard(
     provider: AiProvider,
     onSetDefault: () -> Unit,
-    onDeleteRequest: () -> Unit
+    onDeleteRequest: () -> Unit,
+    onShowGuide: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -221,6 +232,9 @@ private fun ProviderCard(
                     label = { Text(provider.apiFormat.name.lowercase(), style = MaterialTheme.typography.labelSmall) }
                 )
                 Spacer(Modifier.weight(1f))
+                IconButton(onClick = onShowGuide, modifier = Modifier.size(36.dp)) {
+                    Icon(Icons.Default.Help, contentDescription = "Setup guide", tint = MaterialTheme.colorScheme.primary)
+                }
                 IconButton(onClick = onSetDefault, modifier = Modifier.size(36.dp)) {
                     Icon(
                         if (provider.isDefault) Icons.Default.Star else Icons.Outlined.StarBorder,

@@ -1,10 +1,12 @@
 package com.miniforge.app.ai
 
+import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.request.headers
 import io.ktor.client.request.preparePost
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsChannel
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.utils.io.readUTF8Line
@@ -23,7 +25,7 @@ class AnthropicAdapter @Inject constructor(private val client: HttpClient) : AiA
         val model: String,
         val system: String,
         val messages: List<AiMessage>,
-        val max_tokens: Int = 4096,
+        val max_tokens: Int = 16000,
         val stream: Boolean = true
     )
 
@@ -42,6 +44,10 @@ class AnthropicAdapter @Inject constructor(private val client: HttpClient) : AiA
             }
             setBody(Request(model = model, system = systemPrompt, messages = messages))
         }.execute { response ->
+            if (response.status.value !in 200..299) {
+                val error = response.bodyAsText()
+                throw Exception("API error ${response.status.value}: ${error.take(300)}")
+            }
             val channel = response.bodyAsChannel()
             var lastEvent = ""
             while (!channel.isClosedForRead) {
