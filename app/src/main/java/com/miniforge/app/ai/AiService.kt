@@ -38,7 +38,9 @@ class AiService @Inject constructor(
         Rules for the HTML:
         - ONE file. All CSS and JavaScript must be inline — no external links, no CDN, no imports.
         - No external images. Use CSS gradients, SVG inline, or base64 data URIs.
-        - No eval(), no document.cookie access, no sensitive localStorage usage.
+        - No eval(), no document.cookie access.
+        - USE localStorage freely for saving user data (notes, todos, settings, etc.) — it is fully supported and enabled.
+        - ALL interactive buttons must work: add, delete, edit, save — use JavaScript event listeners.
         - Mobile-first layout. Touch-friendly tap targets (minimum 44px height).
         - Works in Android WebView (Chromium-based). Use standard HTML5/CSS3/ES6.
     """.trimIndent()

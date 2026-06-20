@@ -120,6 +120,8 @@ fun HtmlWebView(html: String, modifier: Modifier = Modifier) {
         factory = { context ->
             WebView(context).apply {
                 settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
+                settings.databaseEnabled = true
                 settings.allowFileAccess = false
                 settings.allowContentAccess = false
                 settings.setSupportZoom(false)
