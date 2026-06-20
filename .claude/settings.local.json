@@ -36,7 +36,8 @@
       "Bash(PowerShell -Command \".\\\\gradlew assembleDebug 2>&1\")",
       "Bash(rm \"/c/claude code mini app maker for android/app/src/main/java/com/miniforge/app/server/LocalServer.kt\")",
       "Bash(rm \"/c/claude code mini app maker for android/app/src/main/java/com/miniforge/app/ui/create/QrCodeGenerator.kt\")",
-      "Bash(rm \"/c/claude code mini app maker for android/app/src/main/res/xml/file_provider_paths.xml\")"
+      "Bash(rm \"/c/claude code mini app maker for android/app/src/main/res/xml/file_provider_paths.xml\")",
+      "Bash(bash ./gradlew assembleDebug)"
     ]
   }
 }
