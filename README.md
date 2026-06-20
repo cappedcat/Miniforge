@@ -123,7 +123,6 @@ Each app can be exported as a standalone HTML file:
 4. The app runs anywhere HTML is supported
 
 ### 🌍 Multi-Language Support
-сский (Russian)
 
 Language automatically switches based on your Android device's system language setting.
 
