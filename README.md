@@ -56,13 +56,12 @@ No subscriptions. No platform fees. No markup. You pay only for the API calls yo
 6. Tap **Save Provider**
 
 **Getting API Keys:**
-- **Claude**: Visit [console.anthropic.com/account/keys](console.anthropic.com/account/keys)
 - **OpenAI**: Visit [platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
 - **Mistral**: Visit [console.mistral.ai/api-keys](https://console.mistral.ai/api-keys)
 - **Groq**: Visit [console.groq.com/keys](https://console.groq.com/keys)
 - **Gemini**: Visit [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
 - **OpenRouter**: Visit [openrouter.ai/keys](https://openrouter.ai/keys)
-
+- 
 Each provider has a help button (📘) in Settings that links directly to their setup page.
 
 ### Step 2: Create Your First App
