@@ -144,7 +144,7 @@ fun HtmlWebView(html: String, modifier: Modifier = Modifier) {
             }
         },
         update = { webView ->
-            webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
+            webView.loadDataWithBaseURL("https://miniforge.app", html, "text/html", "UTF-8", null)
         },
         modifier = modifier
     )
