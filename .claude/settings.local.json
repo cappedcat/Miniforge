@@ -29,7 +29,11 @@
       "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD|Compilation error\"})",
       "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD\"})",
       "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD\"}; echo \"Build exit code: $?\")",
-      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD\"}; echo \"Build exit: $?\")"
+      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD\"}; echo \"Build exit: $?\")",
+      "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD|error\"})",
+      "Bash(.\\\\gradlew assembleDebug)",
+      "Bash(.\\\\gradlew assembleDebug --info)",
+      "Bash(PowerShell -Command \".\\\\gradlew assembleDebug 2>&1\")"
     ]
   }
 }

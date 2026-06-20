@@ -32,9 +32,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.miniforge.app.R
 
 @Composable
 fun NewAppScreen(
@@ -163,7 +165,7 @@ fun NewAppScreen(
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("App name") },
+            label = { Text(stringResource(R.string.app_name_label)) },
             placeholder = { Text("e.g. Tip Calculator") },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
@@ -173,7 +175,7 @@ fun NewAppScreen(
         OutlinedTextField(
             value = description,
             onValueChange = { description = it },
-            label = { Text("Short description (optional)") },
+            label = { Text(stringResource(R.string.short_description)) },
             placeholder = { Text("e.g. Calculates tips and splits bills between friends") },
             modifier = Modifier.fillMaxWidth(),
             minLines = 2,
@@ -184,12 +186,12 @@ fun NewAppScreen(
         OutlinedTextField(
             value = prompt,
             onValueChange = { prompt = it },
-            label = { Text("What should it do?") },
-            placeholder = { Text("Describe the features, layout, and behavior in detail…") },
+            label = { Text(stringResource(R.string.what_should_do)) },
+            placeholder = { Text(stringResource(R.string.describe_detail)) },
             modifier = Modifier.fillMaxWidth(),
             minLines = 5,
             maxLines = 10,
-            supportingText = { Text("The more detail you provide, the better the result.") }
+            supportingText = { Text(stringResource(R.string.detail_better)) }
         )
         Spacer(Modifier.height(24.dp))
 
@@ -208,7 +210,7 @@ fun NewAppScreen(
             contentPadding = ButtonDefaults.ButtonWithIconContentPadding
         ) {
             Icon(Icons.Default.AutoAwesome, contentDescription = null, modifier = Modifier.padding(end = 8.dp))
-            Text("Generate App")
+            Text(stringResource(R.string.generate_app))
         }
     }
 }

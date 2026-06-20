@@ -51,4 +51,10 @@
     <string name="example_change">e.g. Add a dark mode toggle, change the color scheme…</string>
     <string name="example_description">e.g. Calculates tips and splits bills between friends</string>
     <string name="example_name">e.g. Tip Calculator</string>
+    <string name="create_mini_app">Create a Mini App</string>
+    <string name="describe_app">Describe what you want to build — the AI generates a self-contained app.</string>
+    <string name="provider">Provider</string>
+    <string name="model">Model</string>
+    <string name="no_providers">No providers added yet. Go to Settings → AI Providers to add one.</string>
+    <string name="fetching_models">Fetching models from</string>
 </resources>

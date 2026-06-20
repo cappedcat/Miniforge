@@ -51,4 +51,10 @@
     <string name="example_change">למשל הוסף מצב חשוך, שנה את ערכת הצבעים…</string>
     <string name="example_description">למשל מחשב טיפים וחוסך בין חברים</string>
     <string name="example_name">למשל מחשבון טיפים</string>
+    <string name="create_mini_app">יצור אפליקציה קטנה</string>
+    <string name="describe_app">תאר מה אתה רוצה לבנות - ה-AI יוצר אפליקציה עצמאית.</string>
+    <string name="provider">ספק</string>
+    <string name="model">מודל</string>
+    <string name="no_providers">לא הוספת ספקים עדיין. עבור להגדרות → ספקי AI כדי להוסיף אחד.</string>
+    <string name="fetching_models">ביצוע הבאה של מודלים מ</string>
 </resources>

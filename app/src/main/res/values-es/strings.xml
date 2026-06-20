@@ -51,4 +51,10 @@
     <string name="example_change">p.ej. Añadir un modo oscuro, cambiar el esquema de colores…</string>
     <string name="example_description">p.ej. Calcula propinas y divide facturas entre amigos</string>
     <string name="example_name">p.ej. Calculadora de Propinas</string>
+    <string name="create_mini_app">Crear una Mini Aplicación</string>
+    <string name="describe_app">Describe qué quieres construir — la IA genera una aplicación autónoma.</string>
+    <string name="provider">Proveedor</string>
+    <string name="model">Modelo</string>
+    <string name="no_providers">No hay proveedores añadidos. Ve a Configuración → Proveedores de IA para añadir uno.</string>
+    <string name="fetching_models">Obteniendo modelos de</string>
 </resources>

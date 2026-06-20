@@ -34,9 +34,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.miniforge.app.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -162,7 +164,7 @@ fun EditAppScreen(
                                 OutlinedTextField(
                                     value = refinementPrompt,
                                     onValueChange = { refinementPrompt = it },
-                                    label = { Text("What would you like to change?") },
+                                    label = { Text(stringResource(R.string.what_change)) },
                                     modifier = Modifier.fillMaxWidth(),
                                     minLines = 2,
                                     maxLines = 3
@@ -181,7 +183,7 @@ fun EditAppScreen(
                                         modifier = Modifier.weight(1f),
                                         enabled = refinementPrompt.isNotBlank() && uiState.selectedModelId != null
                                     ) {
-                                        Text("Update")
+                                        Text(stringResource(R.string.update))
                                     }
                                 }
                             }
