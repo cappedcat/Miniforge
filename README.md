@@ -56,7 +56,7 @@ No subscriptions. No platform fees. No markup. You pay only for the API calls yo
 6. Tap **Save Provider**
 
 **Getting API Keys:**
-- **Claude**: Visit [[console.anthropic.com/account/keys](console.anthropic.com/account/keys)](https://platform.claude.com/login?returnTo=%2F%3F)
+- **Claude**: Visit [[console.anthropic.com/account/keys](console.anthropic.com/account/keys)
 - **OpenAI**: Visit [platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
 - **Mistral**: Visit [console.mistral.ai/api-keys](https://console.mistral.ai/api-keys)
 - **Groq**: Visit [console.groq.com/keys](https://console.groq.com/keys)
