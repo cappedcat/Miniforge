@@ -33,7 +33,10 @@
       "PowerShell(cd \"C:\\\\claude code mini app maker for android\"; .\\\\gradlew assembleDebug 2>&1 | Where-Object {$_ -match \"BUILD|error\"})",
       "Bash(.\\\\gradlew assembleDebug)",
       "Bash(.\\\\gradlew assembleDebug --info)",
-      "Bash(PowerShell -Command \".\\\\gradlew assembleDebug 2>&1\")"
+      "Bash(PowerShell -Command \".\\\\gradlew assembleDebug 2>&1\")",
+      "Bash(rm \"/c/claude code mini app maker for android/app/src/main/java/com/miniforge/app/server/LocalServer.kt\")",
+      "Bash(rm \"/c/claude code mini app maker for android/app/src/main/java/com/miniforge/app/ui/create/QrCodeGenerator.kt\")",
+      "Bash(rm \"/c/claude code mini app maker for android/app/src/main/res/xml/file_provider_paths.xml\")"
     ]
   }
 }
